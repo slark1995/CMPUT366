@@ -24,7 +24,10 @@ def agent_start(this_observation): # returns NumPy array, this_observation: NumP
     global last_action
 
     local_action = np.zeros(1)
-    local_action[0] = findGreedyAction()
+    if rand_un() < 0.1: # you may change it to 0
+        local_action[0] = rand_in_range(num_actions)
+    else:
+        local_action[0] = findGreedyAction()
     last_action = local_action
 
 
@@ -35,7 +38,7 @@ def agent_start(this_observation): # returns NumPy array, this_observation: NumP
 def agent_step(reward, this_observation): # returns NumPy array, reward: floating point, this_observation: NumPy array
     global last_action
     saveQInTable(reward)
-    last_action[0] = findGreedyAction()
+
     return last_action
 
 def agent_end(reward): # reward: floating point
@@ -58,9 +61,9 @@ def agent_message(inMessage): # returns string, inMessage: string
 
 
 
-def createTable():
+def createTable(): #create a Q table track all Q(a)
     global Qtable
-    Q_a = 5
+    Q_a = 0 # you may need change it to 5
     Qtable = []
     for i in range(num_actions):
         Qtable.append(Q_a)
@@ -81,7 +84,7 @@ def findGreedyAction():#find the largest Q in Qtable
     index = rand_in_range(len(ava_table))
     return ava_table[index]
 
-def saveQInTable(reward): #update Qtable
+def saveQInTable(reward): #update Qtable getting new Q(a)
     global Qtable, last_action 
     last_Q = Qtable[int(last_action[0])]
     new_Q = last_Q+(0.1)*(reward-last_Q)  

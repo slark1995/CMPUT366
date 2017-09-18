@@ -48,7 +48,7 @@ def env_message(inMessage): # returns string, inMessage: string
     return "I don't know how to respond to your message"
 
 
-def createDistribution():
+def createDistribution(): # create distributions contains mean of each distribution
     global distributions, numActions
     i  =0
     distributions = []
@@ -58,7 +58,7 @@ def createDistribution():
         i+=1
     return
 
-def findHighestValue():
+def findHighestValue(): #return the largest q*(a) 's index
     global distributions
     max = distributions[0]
     for distribution in distributions:
