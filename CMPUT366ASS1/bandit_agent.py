@@ -24,7 +24,7 @@ def agent_start(this_observation): # returns NumPy array, this_observation: NumP
     global last_action
 
     local_action = np.zeros(1)
-    if rand_un() < 0.1: # you may change it to 0
+    if rand_un() < 0: # you may change it to 0 or 0.1
         local_action[0] = rand_in_range(num_actions)
     else:
         local_action[0] = findGreedyAction()
@@ -61,9 +61,9 @@ def agent_message(inMessage): # returns string, inMessage: string
 
 
 
-def createTable(): #create a Q table track all Q(a)
+def createTable(): #create a Q table tracks all Q(a)
     global Qtable
-    Q_a = 0 # you may need change it to 5
+    Q_a = 5 # you may need change it to 5 or 0
     Qtable = []
     for i in range(num_actions):
         Qtable.append(Q_a)
