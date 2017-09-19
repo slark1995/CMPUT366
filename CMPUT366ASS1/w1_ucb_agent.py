@@ -14,7 +14,7 @@ import math
 last_action = None # last_action: NumPy array
 Qtable = None
 num_actions = 10
-total_t = 1
+total_t = 0
 
 def agent_init():
     global last_action
@@ -66,7 +66,7 @@ def createTable(Q_a): #create a Q table tracks all Q(a) Q_a = Q_estimate
     global Qtable
     Qtable = []
     for i in range(num_actions):
-        Qtable.append([Q_a,1])
+        Qtable.append([Q_a,0])
     return
 
 
@@ -75,8 +75,10 @@ def findGreedyAction(c):#find the largest value ,c is a constant
     n = 0
     a = [n]
     for Q in Qtable:
-        v =  Q[0]+c*(math.sqrt(math.log(total_t)/float(Q[1])))
-        if m < v :
+        small_t = float(Q[1])
+        s = math.log(total_t+1) /(small_t+1)
+        v =  Q[0] + c * (math.sqrt(s))
+        if m < v:
             m = v
             a = [n]
         elif m == v:

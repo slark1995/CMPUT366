@@ -8,7 +8,7 @@
 """
 
 from rl_glue import *  # Required for RL-Glue
-RLGlue("w1_env", "w1_ucb_agent")
+RLGlue("w1_env", "w1_agent")
 
 import numpy as np
 import sys
