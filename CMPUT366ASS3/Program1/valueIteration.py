@@ -9,68 +9,134 @@
  * If You Have Any Question Please contact haotian1@ualberta.ca.
  * 
  *'''
-
+import numpy as np
 import numpy.random as rnd
+import sys, time
 
-
-
-def rand_un(): # returns floating point
-    return rnd.uniform()
 
 #-----global variable-----#
 V = {} 
-S = []
+V2 = {}
 Pi = {}
 dis = 0.9
-initial_total = 0
- head_pro = 0.6
+head_pro = 0.4
+small_number = 0.001
+
+
+
 
 # initial dict V from 1 to 99 each value is 0
 def initializeV():
-	global V
-	for key in random(1:100):
+	global dis,Pi,V
+	for key in range(1,100):
 		V[key] = 0
-		S.append(key)
-		Pi[key] = min(key,100-key)
-	initial_total = rnd.randint(1:100)
+		V2[key] =0
+		Pi[key] = []
+		Pi[key].append(min(key,100-key))
+
+
 	return
 
+# value evaluation 
 def getVmap(small_p_number):
+	global dis,Pi,V,version
 	loop = True
+
 	while loop:
 		difference = 0
-		for s in S:
+		for s in range(1,100):
 			v = V[s]
-			V[s] = getMaxValueUnderS(s)
-			difference = max(abs(V[s]-v),difference)
+			V2[s] = getMaxValueUnderS(s)
+			difference = max(abs(V2[s]-v),difference)
+		V = V2 ###
 		if difference < small_p_number:
-			loop = False
+			loop = False 
 	return
 
-def getReward():
-	global head_pro
-	if rand_un() < head_pro:
-		return 1
-	else:
-		return 0
- 
-def outputPolicy(total):
-	key = total
-	action = Pi[total]
-	if  getReward()==1:
-		total += action
-	else:
-		total -=action
-	Pi[key] = (reward+dis*V[total])
+#update policy check if policy is stable
+def updatePolicy():
+	global dis,Pi,V
+	stable = True
+	for s in range(1,100):
+		old_action = Pi[s]
+		Pi[s] = getBestActionUnderS(s)
+		if Pi[s] != old_action:
+			stable = False
+	return stable
 
+# under state s find the best actions
+def getBestActionUnderS(s):
+	global dis,Pi,V
+	maxValue = 0
+	best_action = []
+	for action in range(1,min(s,100-s)+1):
+		head_result = 0
+		if s+action >=100:
+			head_result = 1
 
+			head = head_pro*(head_result + dis*0) #0.6 pro to go next state = state+reward
+		else:
+			head = head_pro*(head_result + dis*V[action+s]) #0.6 pro to go next state = state+reward
+		
+		back_result = 0
+		if s-action<= 0:
+			back = (1- head_pro)*(back_result + dis*0)
+		else:
+			back = (1- head_pro)*(back_result + dis*V[s-action])
+		if  (head+back)>maxValue:
+			best_action = [action]
+			maxValue = head+back
+		elif (head+back) == maxValue:
+			best_action.append(action)
+	return best_action
 
+# input: s: int    s->state
+# output: value: float    value->V[s]
 def getMaxValueUnderS(s):
-	max_value = -1
-	return max_value
+	global dis,Pi,V
+	totalValue = 0
+
+	for action in Pi[s]: # action 
+		head_result = 0
+		if s+action >=100:
+			head_result = 1
+			gameOver = True
+			head = head_pro*(head_result + dis*0) #0.6 pro to go next state = state+reward
+		else:
+			head = head_pro*(head_result + dis*V[action+s]) #0.6 pro to go next state = state+reward
+		
+		back_result = 0
+		if s-action<= 0:
+			gameOver = True
+			back = (1- head_pro)*(back_result + dis*0)
+		else:
+			back = (1- head_pro)*(back_result + dis*V[s-action])
+
+		totalValue += (head+back)
+	return totalValue/float(len(Pi[s]))
+
 
 
 def main():
+
+	start_time = time.time()
+	npV = np.zeros(99)
+	npPi = np.zeros(99)
+	initializeV() #initial V
+	getVmap(small_number) # first find all value(value evaluation)
+	stable = updatePolicy() #check if stable
+	while stable == False :  #if V != v* pi != Pi*
+		getVmap(small_number) #value evaluation
+		stable = updatePolicy() #check if stable
+	for i in range(0,99):
+		npV[i] = V[i+1]
+		npPi[i] = Pi[i+1][0]
+	np.save("Value",npV)
+	np.save("Policy",npPi)
+
+	end_time = time.time()
+	print("------total time----> %f sec" %round((time.time() - start_time),2))
+
 	return
 if __name__ == '__main__':
 	main()
