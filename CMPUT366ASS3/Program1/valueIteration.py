@@ -16,10 +16,9 @@ import sys, time
 
 #-----global variable-----#
 V = {} 
-V2 = {}
 Pi = {}
 dis = 0.9 # you may need change it
-head_pro = 0.4 # you may need change it
+head_pro = 0.6 # you may need change it
 small_number = 0.001 # you may need change it
 
 
@@ -30,7 +29,6 @@ def initializeV():
 	global dis,Pi,V
 	for key in range(1,100):
 		V[key] = 0
-		V2[key] =0
 		Pi[key] = []
 		Pi[key].append(min(key,100-key))
 
@@ -46,9 +44,8 @@ def getVmap(small_p_number):
 		difference = 0
 		for s in range(1,100):
 			v = V[s]
-			V2[s] = getMaxValueUnderS(s)
-			difference = max(abs(V2[s]-v),difference)
-		V = V2 ###
+			V[s] = getMaxValueUnderS(s)
+			difference = max(abs(V[s]-v),difference)
 		if difference < small_p_number:
 			loop = False 
 	return
@@ -130,7 +127,7 @@ def main():
 		stable = updatePolicy() #check if stable
 	for i in range(0,99):
 		npV[i] = V[i+1]
-		npPi[i] = Pi[i+1][0]
+		npPi[i] = Pi[i+1][-1]
 	np.save("Value",npV)
 	np.save("Policy",npPi)
 
