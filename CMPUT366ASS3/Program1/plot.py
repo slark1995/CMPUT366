@@ -5,6 +5,17 @@
  Purpose: for use of Rienforcement learning course University of Alberta Fall 2017
 """
 
+'''*
+ * Copyright (c) HAOTIAN ZHU ,COMPUT301,University Of Alberta All Rights Reserved.
+ * You May Use, Distribute Or Modify This Code Under Term And 
+ * Condition Of Code Of Students Behavior At University Of Alberta.
+ *
+ *
+ * Author: Haotian Zhu 
+ * Modify the code of Assignment3 plot.py
+ * If You Have Any Question Please contact haotian1@ualberta.ca.
+ * '''
+
 import numpy as np
 import matplotlib.pyplot as plt
 

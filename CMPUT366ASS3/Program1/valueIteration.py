@@ -18,9 +18,9 @@ import sys, time
 V = {} 
 V2 = {}
 Pi = {}
-dis = 0.9
-head_pro = 0.4
-small_number = 0.001
+dis = 0.9 # you may need change it
+head_pro = 0.4 # you may need change it
+small_number = 0.001 # you may need change it
 
 
 
