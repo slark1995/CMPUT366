@@ -22,7 +22,7 @@ returnsNum = np.zeros((99,99))
 actions = []
 num_total_states = 99
 epsilon = 0.1
-discount = 0.9
+discount = 1
 
 def setActions():
 	global actions
@@ -32,7 +32,7 @@ def setActions():
 	return
 
 def agent_init():
-	global actions,Q,returnsNum,returnsReward,epsilon,track
+	global Q,returnsNum,returnsReward,epsilon,last_action,last_state,policy
 	"""
 	Hint: Initialize the variables that need to be reset before each run begins
 	Returns: nothing
@@ -41,54 +41,53 @@ def agent_init():
 	setActions()
 	setPolicy()
 	Q = np.zeros((99,99))
-	last_state = np.zeros(1)
-	last_action = np.zeros(1)
+	last_state = 0
+	last_action = 0
 	returnsReward = np.zeros((99,99))
 	returnsNum = np.zeros((99,99))
 
 
 def agent_start(state):
-	global actions,Q,returnsNum,returnsReward,epsilon,track
+	global Q,returnsNum,returnsReward,epsilon,last_action,last_state,policy
 	"""
 	Hint: Initialize the variavbles that you want to reset before starting a new episode
 	Arguments: state: numpy array
 	Returns: action: integer
 	"""
 	# pick the first action, don't forget about exploring starts	
-	action =  np.nanargmax(policy*Q)+1
-
-	returnsReward[last_state[0]-1][last_action[0]-1] += (reward+discount*(Q[state[0]-1][action-1]))
-	last_action[0] = action
-	last_state[0] = state
+	action =  np.nanargmax(policy[state[0]-1])+1
+	last_action = action
+	last_state = state[0]
 	returnsNum[state[0]-1][action-1]+=1
 	return action
 
 
 def agent_step(reward, state): # returns NumPy array, reward: floating point, this_observation: NumPy array
-	global actions,Q,returnsNum,returnsReward,epsilon,track
+	global Q,returnsNum,returnsReward,epsilon,last_action,last_state,policy
 	"""
 	Arguments: reward: floting point, state: integer
 	Returns: action: floating point
 	"""
 	# select an action, based on Q
-	action =  np.nanargmax(policy*Q)+1
-	returnsReward[last_state[0]-1][last_action[0]-1] += (reward+discount*(Q[state[0]-1][action-1]))
-	last_action[0] = action
-	last_state[0] = state
+	action =  np.nanargmax(policy[state[0]-1]*Q[state[0]-1])+1
+	if action == 1 and Q[state[0]-1][0] == 0:
+		action = np.nanargmax(policy[state[0]-1])+1 
+
+	returnsReward[last_state-1][last_action-1] += discount*(Q[state[0]-1][action-1])
+	last_action = action
+	last_state = state[0]
 	returnsNum[state[0]-1][action-1]+=1
 	return action
 
 def agent_end(reward):
-	global actions,Q,returnsNum,returnsReward,epsilon,track
+	global Q,returnsNum,returnsReward,epsilon,last_action,last_state,policy
 	"""
 	Arguments: reward: floating point
 	Returns: Nothing
 	"""
 	# do learning and update pi
-
-	returnsReward[last_state[0]-1][last_action[0]-1] += (reward+0)
-
-	print(returnsReward[49],returnsNum[49])
+	returnsReward[last_state-1][last_action-1] += (reward+discount*0)
+	#print("e",returnsReward[last_state-1][last_action-1],returnsNum[last_state-1][last_action-1],last_state,last_action)
 	Q = np.nan_to_num(returnsReward/returnsNum)
 	for s in range(1,100): #update Pi
 		best_a = np.nanargmax(Q[s-1])+1
