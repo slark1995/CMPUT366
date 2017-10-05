@@ -86,8 +86,8 @@ def agent_end(reward):
 	Returns: Nothing
 	"""
 	# do learning and update pi
+	np.seterr(divide='ignore',invalid='ignore')
 	returnsReward[last_state-1][last_action-1] += (reward+discount*0)
-	#print("e",returnsReward[last_state-1][last_action-1],returnsNum[last_state-1][last_action-1],last_state,last_action)
 	Q = np.nan_to_num(returnsReward/returnsNum)
 	for s in range(1,100): #update Pi
 		best_a = np.nanargmax(Q[s-1])+1
