@@ -31,9 +31,8 @@ if __name__ == "__main__":
 
 	for run in range(num_runs):
 		counter = 0
-		print "run number: ", run
+		print "=>run number: ", run
 		RL_init()
-		print "\n"
 		i = 0
 		for episode in range(num_episodes):
 			RL_episode(max_steps)
@@ -46,6 +45,9 @@ if __name__ == "__main__":
 				v_over_runs[episode].append(V)
 				counter += 1
 		RL_cleanup()
+
+		print "=>finish one run! :D\n"
+
 			
 	n = v_over_runs[key_episodes[0]][0].shape[0]
 	n_valueFunc = len(key_episodes)
@@ -53,9 +55,9 @@ if __name__ == "__main__":
 	for i,episode in enumerate(key_episodes):
 			# each item in dict is a list (one item per run), and each item is a value function 
 			data = np.matrix(v_over_runs[episode])
-			# therefore data is (num_runs x length of value fucntion)
+			# the	fore data is (num_runs x length of value fucntion)
 			average_v_over_runs[i] = np.mean(data, axis=0)
 
 	np.save("ValueFunction", average_v_over_runs)
-	print("----total time----->%f" %round(time.time()-start_time,2))
+	print("=>total time: %f. " %round(time.time()-start_time,2))
 

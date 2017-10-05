@@ -89,6 +89,7 @@ def agent_end(reward):
 	np.seterr(divide='ignore',invalid='ignore')
 	returnsReward[last_state-1][last_action-1] += (reward+discount*0)
 	Q = np.nan_to_num(returnsReward/returnsNum)
+
 	for s in range(1,100): #update Pi
 		best_a = np.nanargmax(Q[s-1])+1
 		if best_a == 1 and Q[s-1][best_a-1] == 0 :
@@ -115,7 +116,7 @@ def agent_message(in_message): # returns string, in_message: string
 	"""
 	# should not need to modify this function. Modify at your own risk
 	if (in_message == 'ValueFunction'):
-		return pickle.dumps(np.max(Q, axis=0), protocol=0)
+		return pickle.dumps(np.max(Q, axis=1), protocol=0)
 	else:
 		return "I don't know what to return!!"
 
