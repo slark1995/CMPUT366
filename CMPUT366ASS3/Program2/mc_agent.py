@@ -6,7 +6,18 @@
 		   for use on A3 of Reinforcement learning course University of Alberta Fall 2017
  
 """
-
+"""
+/*
+ * Copyright (c) HAOTIAN ZHU ,COMPUT301,University Of Alberta All Rights Reserved.
+ * You May Use, Distribute Or Modify This Code Under Term And 
+ * Condition Of Code Of Students Behavior At University Of Alberta.
+ *
+ *
+ * Author: Haotian Zhu
+ * If You Have Any Question Please contact haotian1@ualberta.ca.
+ * 
+ */
+"""
 from utils import rand_in_range, rand_un
 import numpy as np
 import pickle
