@@ -15,119 +15,65 @@ import sys, time
 
 
 #-----global variable-----#
-V = {} 
-Pi = {}
-dis = 0.9 # you may need change it
-head_pro = 0.6 # you may need change it
-small_number = 0.001 # you may need change it
+V = np.zeros(101)
+npV = np.zeros((99,4))
+totalValue = np.zeros(1)
+npPi = np.zeros(99)
+dis = 1 # you may need change it
+head_pro = 0.4 # you may need change it
+small_number = 0.0000000000000000000000000000001 # you may need change it
+swp = 0
 
 
-
-
-# initial dict V from 1 to 99 each value is 0
-def initializeV():
-	global dis,Pi,V
-	for key in range(1,100):
-		V[key] = 0
-		Pi[key] = []
-		Pi[key].append(min(key,100-key))
-
-
-	return
 
 # value evaluation 
 def getVmap(small_p_number):
-	global dis,Pi,V,version
+	global dis,V,version,swp
 	loop = True
 
 	while loop:
 		difference = 0
-		for s in range(1,100):
+		for s in range(1,100): # 1-99
 			v = V[s]
 			V[s] = getMaxValueUnderS(s)
 			difference = max(abs(V[s]-v),difference)
+			if swp<3:
+				npV[s-1][swp] = V[s]
+			else:
+				npV[s-1][3] = V[s]
 		if difference < small_p_number:
 			loop = False 
+		swp+=1
 	return
 
-#update policy check if policy is stable
-def updatePolicy():
-	global dis,Pi,V
-	stable = True
-	for s in range(1,100):
-		old_action = Pi[s]
-		Pi[s] = getBestActionUnderS(s)
-		if Pi[s] != old_action:
-			stable = False
-	return stable
 
-# under state s find the best actions
-def getBestActionUnderS(s):
-	global dis,Pi,V
-	maxValue = 0
-	best_action = []
-	for action in range(1,min(s,100-s)+1):
-		head_result = 0
-		if s+action >=100:
-			head_result = 1
-
-			head = head_pro*(head_result + dis*0) #0.6 pro to go next state = state+reward
-		else:
-			head = head_pro*(head_result + dis*V[action+s]) #0.6 pro to go next state = state+reward
-		
-		back_result = 0
-		if s-action<= 0:
-			back = (1- head_pro)*(back_result + dis*0)
-		else:
-			back = (1- head_pro)*(back_result + dis*V[s-action])
-		if  (head+back)>maxValue:
-			best_action = [action]
-			maxValue = head+back
-		elif (head+back) == maxValue:
-			best_action.append(action)
-	return best_action
 
 # input: s: int    s->state
 # output: value: float    value->V[s]
 def getMaxValueUnderS(s):
-	global dis,Pi,V
-	totalValue = 0
-
-	for action in Pi[s]: # action 
-		head_result = 0
+	global dis,V,totalValue
+	maxValue = np.zeros(1)
+	best_action = 0
+	for action in range(1,min(s,100-s)+1): #0-min(s,100-s)
 		if s+action >=100:
-			head_result = 1
-			gameOver = True
-			head = head_pro*(head_result + dis*0) #0.6 pro to go next state = state+reward
+			totalValue[0] = head_pro*(1+ dis*V[action+s])+(1- head_pro)*(0 + dis*V[s-action])
 		else:
-			head = head_pro*(head_result + dis*V[action+s]) #0.6 pro to go next state = state+reward
-		
-		back_result = 0
-		if s-action<= 0:
-			gameOver = True
-			back = (1- head_pro)*(back_result + dis*0)
-		else:
-			back = (1- head_pro)*(back_result + dis*V[s-action])
-
-		totalValue += (head+back)
-	return totalValue/float(len(Pi[s]))
+			totalValue[0] = head_pro*(0+ dis*V[action+s])+(1- head_pro)*(0 + dis*V[s-action])
+		if totalValue>maxValue:
+			maxValue[0] = totalValue[0]
+			best_action = action
+	if maxValue < V[s]:
+		maxValue = V[s]
+		action =0
+	npPi[s-1] = best_action
+	return maxValue[0]
 
 
 
 def main():
-
 	start_time = time.time()
-	npV = np.zeros(99)
-	npPi = np.zeros(99)
-	initializeV() #initial V
 	getVmap(small_number) # first find all value(value evaluation)
-	stable = updatePolicy() #check if stable
-	while stable == False :  #if V != v* pi != Pi*
-		getVmap(small_number) #value evaluation
-		stable = updatePolicy() #check if stable
-	for i in range(0,99):
-		npV[i] = V[i+1]
-		npPi[i] = Pi[i+1][-1]
+	print("------total swp---->%d" %swp)
 	np.save("Value",npV)
 	np.save("Policy",npPi)
 
