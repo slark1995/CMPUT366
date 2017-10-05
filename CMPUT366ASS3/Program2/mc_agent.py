@@ -30,17 +30,11 @@ policy = None
 Q = None
 returnsReward = np.zeros((99,99))
 returnsNum = np.zeros((99,99))
-actions = []
-num_total_states = 99
-epsilon = 0.1
-discount = 1
 
-def setActions():
-	global actions
-	actions = []
-	for i in range(1,100):
-		actions.append(i)
-	return
+epsilon = 0.1 #you may need change it
+discount = 1 # you may need change it
+
+
 
 def agent_init():
 	global Q,returnsNum,returnsReward,epsilon,last_action,last_state,policy
@@ -49,7 +43,6 @@ def agent_init():
 	Returns: nothing
 	"""
 	#initialize the policy array in a smart way
-	setActions()
 	setPolicy()
 	Q = np.zeros((99,99))
 	last_state = 0
