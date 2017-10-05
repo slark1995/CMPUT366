@@ -55,7 +55,7 @@ def agent_start(state):
 	Returns: action: integer
 	"""
 	# pick the first action, don't forget about exploring starts	
-	action =  nanargmax(policy*Q)+1
+	action =  np.nanargmax(policy*Q)+1
 
 	returnsReward[last_state[0]-1][last_action[0]-1] += (reward+discount*(Q[state[0]-1][action-1]))
 	last_action[0] = action
@@ -71,7 +71,7 @@ def agent_step(reward, state): # returns NumPy array, reward: floating point, th
 	Returns: action: floating point
 	"""
 	# select an action, based on Q
-	action =  nanargmax(policy*Q)+1
+	action =  np.nanargmax(policy*Q)+1
 	returnsReward[last_state[0]-1][last_action[0]-1] += (reward+discount*(Q[state[0]-1][action-1]))
 	last_action[0] = action
 	last_state[0] = state
