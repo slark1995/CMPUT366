@@ -46,7 +46,7 @@ discount = 1 # you may need change it
 
 
 def agent_init():
-	global Q,returnsNum,returnsReward,epsilon,last_action,last_state,policy,ischoose
+	global Q,returnsNum,returnsReward,epsilon,last_action,last_state,policy
 	"""
 	Hint: Initialize the variables that need to be reset before each run begins
 	Returns: nothing
@@ -61,7 +61,7 @@ def agent_init():
 
 
 def agent_start(state):
-	global Q,returnsNum,returnsReward,epsilon,last_action,last_state,policy,ischoose
+	global Q,returnsNum,returnsReward,epsilon,last_action,last_state,policy
 	"""
 	Hint: Initialize the variavbles that you want to reset before starting a new episode
 	Arguments: state: numpy array
@@ -70,9 +70,7 @@ def agent_start(state):
 	# pick the first action, don't forget about exploring starts
 
 	#------choose action-------#	
-
 	action =  np.nanargmax(policy[state[0]-1])+1
-	ischoose[state[0]] = 1
 	last_action = action #set last action
 	last_state = state[0] #set last state
 	returnsNum[state[0]-1][action-1]+=1
@@ -80,7 +78,7 @@ def agent_start(state):
 
 
 def agent_step(reward, state): # returns NumPy array, reward: floating point, this_observation: NumPy array
-	global Q,returnsNum,returnsReward,epsilon,last_action,last_state,policy,ischoose
+	global Q,returnsNum,returnsReward,epsilon,last_action,last_state,policy
 	"""
 	Arguments: reward: floting point, state: integer
 	Returns: action: floating point
@@ -92,14 +90,13 @@ def agent_step(reward, state): # returns NumPy array, reward: floating point, th
 
 	action =  np.nanargmax(policy[state[0]-1]*Q[state[0]-1])+1
 
-	# when program chooses  an  action, 
+	# when program chooses action = 1 first action, 
 	# it is possible that computer never choose this action under s before
-	# but the policy already updated 
-	# so we fisrt check it, if computer hasn't choose it, then choose initial policy 
-	if  ischoose[state[0]] ==1 :
+	# so we fisrt check it, if computer hasn't choose it then choose initial policy 
+	if action == 1 and Q[state[0]-1][action-1] == 0:
 		action = np.nanargmax(policy[state[0]-1])+1 
+		
 
-	ischoose[state[0]] = 1 #set ischoose
 	returnsReward[last_state-1][last_action-1] += reward+discount*(Q[state[0]-1][action-1])
 	last_action = action #set last action
 	last_state = state[0] #set last state
@@ -120,7 +117,7 @@ def agent_end(reward):
 	#------update Pi-------#
 	for s in range(1,100):
 		best_a = np.nanargmax(Q[s-1])+1
-		if ischoose[s] == 0 :
+		if best_a == 1 and Q[s-1][best_a-1] == 0 :
 			best_a = min(s,100-s)
 		c = epsilon/(min(s,100-s))
 		for j in range(min(s,100-s)):
@@ -149,12 +146,11 @@ def agent_message(in_message): # returns string, in_message: string
 		return "I don't know what to return!!"
 
 def setPolicy():
-	global policy,ischoose
+	global policy
 	policy = np.zeros((99,99))
 	for s in range(1,100):
 		a = min(s,100-s)
 		policy[s-1][a-1] = 1.0 # under s choose a
-		ischoose[s] = 0
 	return
 
 
