@@ -38,7 +38,6 @@ policy = None
 Q = None
 returnsReward = np.zeros((99,99))
 returnsNum = np.zeros((99,99))
-ischoose = {}
 
 epsilon = 0.1 #you may need change it
 discount = 1 # you may need change it
@@ -90,9 +89,9 @@ def agent_step(reward, state): # returns NumPy array, reward: floating point, th
 
 	action =  np.nanargmax(policy[state[0]-1]*Q[state[0]-1])+1
 
-	# when program chooses action = 1 first action, 
-	# it is possible that computer never choose this action under s before
-	# so we fisrt check it, if computer hasn't choose it then choose initial policy 
+	# when program chooses action = 1 first action, and action-value is 0 
+	# it is means that all action-value under state is 0
+	# we choose action randomly then. 
 	if action == 1 and Q[state[0]-1][action-1] == 0:
 		#action = np.nanargmax(policy[state[0]-1])+1
 		action = rand_in_range(min(state[0],100-state[0]))+1
@@ -142,7 +141,7 @@ def agent_message(in_message): # returns string, in_message: string
 	"""
 	# should not need to modify this function. Modify at your own risk
 	if (in_message == 'ValueFunction'):
-		return pickle.dumps(np.nanmax(Q*policy, axis=1), protocol=0)
+		return pickle.dumps(np.nanmax(Q, axis=1), protocol=0)
 	else:
 		return "I don't know what to return!!"
 
