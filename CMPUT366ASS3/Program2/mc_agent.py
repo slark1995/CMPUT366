@@ -94,8 +94,9 @@ def agent_step(reward, state): # returns NumPy array, reward: floating point, th
 	# it is possible that computer never choose this action under s before
 	# so we fisrt check it, if computer hasn't choose it then choose initial policy 
 	if action == 1 and Q[state[0]-1][action-1] == 0:
-		action = np.nanargmax(policy[state[0]-1])+1 
-		
+		#action = np.nanargmax(policy[state[0]-1])+1
+		action = rand_in_range(min(state[0],100-state[0]))+1
+
 
 	returnsReward[last_state-1][last_action-1] += reward+discount*(Q[state[0]-1][action-1])
 	last_action = action #set last action
