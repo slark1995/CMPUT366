@@ -24,12 +24,21 @@ import pickle
 
 
 
+# last_state : a variable to track last state given by enviroment
+# last_action: a variable to track last action shosen by program under last state
+# policy[s][a]: numpy; has total 99*99 element to track and store all policy(a|s),some pi(a|s) are always 0
+# Q[s][a]: numpy; has total 99*99 element to track and store all action-value under state s and action a
+# returnsReward[s][a]: numpy; stores all history action-value reward-> " reward + discount*Q(a`,s`) " 
+# returnsNum[s][a]: numpy: checks and stores the history total number of choosing a under s
+# epsilon: float variable 
+# discount : flaot varibale <=> gamma
 last_state = None
 last_action = None
 policy = None
 Q = None
 returnsReward = np.zeros((99,99))
 returnsNum = np.zeros((99,99))
+ischoose = {}
 
 epsilon = 0.1 #you may need change it
 discount = 1 # you may need change it
@@ -37,7 +46,7 @@ discount = 1 # you may need change it
 
 
 def agent_init():
-	global Q,returnsNum,returnsReward,epsilon,last_action,last_state,policy
+	global Q,returnsNum,returnsReward,epsilon,last_action,last_state,policy,ischoose
 	"""
 	Hint: Initialize the variables that need to be reset before each run begins
 	Returns: nothing
@@ -52,35 +61,49 @@ def agent_init():
 
 
 def agent_start(state):
-	global Q,returnsNum,returnsReward,epsilon,last_action,last_state,policy
+	global Q,returnsNum,returnsReward,epsilon,last_action,last_state,policy,ischoose
 	"""
 	Hint: Initialize the variavbles that you want to reset before starting a new episode
 	Arguments: state: numpy array
 	Returns: action: integer
 	"""
-	# pick the first action, don't forget about exploring starts	
+	# pick the first action, don't forget about exploring starts
+
+	#------choose action-------#	
+
 	action =  np.nanargmax(policy[state[0]-1])+1
-	last_action = action
-	last_state = state[0]
+	ischoose[state[0]] = 1
+	last_action = action #set last action
+	last_state = state[0] #set last state
 	returnsNum[state[0]-1][action-1]+=1
 	return action
 
 
 def agent_step(reward, state): # returns NumPy array, reward: floating point, this_observation: NumPy array
-	global Q,returnsNum,returnsReward,epsilon,last_action,last_state,policy
+	global Q,returnsNum,returnsReward,epsilon,last_action,last_state,policy,ischoose
 	"""
 	Arguments: reward: floting point, state: integer
 	Returns: action: floating point
 	"""
 	# select an action, based on Q
+
+	#------choose action-------#
+
+
 	action =  np.nanargmax(policy[state[0]-1]*Q[state[0]-1])+1
-	if action == 1 and Q[state[0]-1][0] == 0:
+
+	# when program chooses  an  action, 
+	# it is possible that computer never choose this action under s before
+	# but the policy already updated 
+	# so we fisrt check it, if computer hasn't choose it, then choose initial policy 
+	if  ischoose[state[0]] ==1 :
 		action = np.nanargmax(policy[state[0]-1])+1 
 
-	returnsReward[last_state-1][last_action-1] += discount*(Q[state[0]-1][action-1])
-	last_action = action
-	last_state = state[0]
-	returnsNum[state[0]-1][action-1]+=1
+	ischoose[state[0]] = 1 #set ischoose
+	returnsReward[last_state-1][last_action-1] += reward+discount*(Q[state[0]-1][action-1])
+	last_action = action #set last action
+	last_state = state[0] #set last state
+	returnsNum[state[0]-1][action-1]+=1 #times + 1
 	return action
 
 def agent_end(reward):
@@ -92,11 +115,12 @@ def agent_end(reward):
 	# do learning and update pi
 	np.seterr(divide='ignore',invalid='ignore')
 	returnsReward[last_state-1][last_action-1] += (reward+discount*0)
-	Q = np.nan_to_num(returnsReward/returnsNum)
-
-	for s in range(1,100): #update Pi
+	#------update Q-------#
+	Q = np.nan_to_num(returnsReward/returnsNum)  
+	#------update Pi-------#
+	for s in range(1,100):
 		best_a = np.nanargmax(Q[s-1])+1
-		if best_a == 1 and Q[s-1][best_a-1] == 0 :
+		if ischoose[s] == 0 :
 			best_a = min(s,100-s)
 		c = epsilon/(min(s,100-s))
 		for j in range(min(s,100-s)):
@@ -120,16 +144,17 @@ def agent_message(in_message): # returns string, in_message: string
 	"""
 	# should not need to modify this function. Modify at your own risk
 	if (in_message == 'ValueFunction'):
-		return pickle.dumps(np.max(Q, axis=1), protocol=0)
+		return pickle.dumps(np.nanmax(Q*policy, axis=1), protocol=0)
 	else:
 		return "I don't know what to return!!"
 
 def setPolicy():
-	global policy
+	global policy,ischoose
 	policy = np.zeros((99,99))
 	for s in range(1,100):
 		a = min(s,100-s)
 		policy[s-1][a-1] = 1.0 # under s choose a
+		ischoose[s] = 0
 	return
 
 
