@@ -20,7 +20,7 @@ npV = np.zeros((99,4))
 totalValue = np.zeros(1)
 npPi = np.zeros(99)
 dis = 1 # you may need change it
-head_pro = 0.4 # you may need change it
+head_pro = 0.55 # you may need change it
 small_number = 0.0000000000000000000000000000001 # you may need change it
 swp = 0
 
