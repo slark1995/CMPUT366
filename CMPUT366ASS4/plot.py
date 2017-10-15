@@ -20,6 +20,9 @@ if __name__ == "__main__":
 		y = int(line.split(",")[1])
 		datay.append(y)
 
+	for i in [0,49,149,199,249,-1]:	
+		plt.plot(datax[i],datay[i],"ro")
+		plt.text(datax[i], datay[i], "("+str(datax[i])+","+str(datay[i])+")")
 	plt.plot(datax,datay)
 	plt.xlim([0,8000])
 	plt.xticks([0,1000,2000,3000,4000,5000,6000,7000,8000])

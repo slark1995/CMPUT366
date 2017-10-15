@@ -36,7 +36,7 @@ import pickle
 
 
 Q = None
-num_action = 9 #you may need change it
+num_action = 8 #you may need change it
 epsilon = 0.1 #you may need change it
 actions = {0:[0,1],1:[1,1],2:[1,0],3:[1,-1],4:[0,-1],5:[-1,-1],6:[-1,0],7:[-1,1]}
 #actions = {0:[0,1],1:[1,0],2:[0,-1],3:[-1,0]}
@@ -129,6 +129,7 @@ def agent_cleanup():
 	This function is not used
 	"""
 	# clean up
+
 	return
 
 def agent_message(in_message): # returns string, in_message: string
