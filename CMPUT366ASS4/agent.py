@@ -38,12 +38,12 @@ import pickle
 Q = None
 num_action = 8 #you may need change it
 epsilon = 0.1 #you may need change it
-actions = {0:[0,1],1:[1,1],2:[1,0],3:[1,-1],4:[0,-1],5:[-1,-1],6:[-1,0],7:[-1,1]}
+actions = {0:[0,1],1:[1,1],2:[1,0],3:[1,-1],4:[0,-1],5:[-1,-1],6:[-1,0],7:[-1,1]} #set all avaiable actions dict
 #actions = {0:[0,1],1:[1,0],2:[0,-1],3:[-1,0]}
-last_action = None
-last_x = None
-last_y = None
-alpha_step = 0.5
+last_action = None #tack last action
+last_x = None #tack last state's x
+last_y = None #tack last state's y
+alpha_step = 0.5 #you may need change it
 
 
 def agent_init():
@@ -58,7 +58,7 @@ def agent_init():
 	last_y = 0
 	last_action = 0
 
-	if num_action == 9:
+	if num_action == 9:  #add a action if user wanna 9 actions
 		actions[8] = [0,0]
 
 
@@ -94,7 +94,7 @@ def agent_step(reward, state): # returns NumPy array, reward: floating point, th
 	"""
 	# select an action, based on Q
 
-	# s' 
+	# s'x and y 
 	x = state[0] 
 	y = state[1]
 
@@ -105,7 +105,7 @@ def agent_step(reward, state): # returns NumPy array, reward: floating point, th
 		action_index = np.argmax(Q[x][y]) #find best action
 
 
-
+	#update last step's Q
 	Q[last_x][last_y][last_action] += alpha_step * (reward+Q[x][y][action_index]-Q[last_x][last_y][last_action])
 
 
