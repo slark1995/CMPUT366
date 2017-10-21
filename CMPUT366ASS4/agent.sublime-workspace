@@ -1,0 +1,346 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"i",
+				"inc\t#include \"…\""
+			],
+			[
+				"da",
+				"datax"
+			],
+			[
+				"data",
+				"datax"
+			],
+			[
+				"pl",
+				"pyplot"
+			],
+			[
+				"c",
+				"current_state"
+			],
+			[
+				"ac",
+				"actions"
+			],
+			[
+				"new",
+				"newy"
+			],
+			[
+				"ne",
+				"newy"
+			],
+			[
+				"re",
+				"reward"
+			],
+			[
+				"las",
+				"last_x"
+			],
+			[
+				"n",
+				"n"
+			],
+			[
+				"epsi",
+				"epsilon"
+			],
+			[
+				"ep",
+				"epsilon"
+			],
+			[
+				"num",
+				"num_episodes"
+			],
+			[
+				"total",
+				"total_steps"
+			],
+			[
+				"to",
+				"total_steps"
+			],
+			[
+				"time",
+				"time_step"
+			],
+			[
+				"r",
+				"reward"
+			],
+			[
+				"al",
+				"alpha_step"
+			],
+			[
+				"ran",
+				"rand_in_range"
+			],
+			[
+				"rand",
+				"rand_un"
+			],
+			[
+				"s",
+				"start_position"
+			],
+			[
+				"is",
+				"is_terminal"
+			],
+			[
+				"d",
+				"director"
+			],
+			[
+				"o",
+				"oid"
+			],
+			[
+				"or",
+				"or1"
+			],
+			[
+				"clea",
+				"cleanTrack"
+			],
+			[
+				"se",
+				"setPolicy"
+			],
+			[
+				"sa",
+				"state"
+			],
+			[
+				"returns",
+				"returnsReward"
+			],
+			[
+				"pr",
+				"print"
+			],
+			[
+				"es",
+				"else"
+			],
+			[
+				"rnd",
+				"rand_in_range"
+			],
+			[
+				"fr",
+				"friend"
+			],
+			[
+				"e",
+				"else"
+			],
+			[
+				"env",
+				"enviroment"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/haotianzhu/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/haotianzhu/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/Users/haotianzhu/Documents/d02_team7/assignment/eurovison_constestant.ttl",
+		"/Users/haotianzhu/Documents/d02_team7/assignment/testd.ttl",
+		"/Users/haotianzhu/Desktop/CopyRight.txt",
+		"/Users/haotianzhu/Documents/CMPUT366/CMPUT366ASS4/agent.py",
+		"/Users/haotianzhu/Documents/CMPUT366/CMPUT366ASS4/windy_exp.py",
+		"/Users/haotianzhu/Documents/CMPUT366/CMPUT366ASS4/plot.py",
+		"/Users/haotianzhu/Documents/CMPUT366/CMPUT366ASS4/rl_glue.py",
+		"/Users/haotianzhu/Documents/CMPUT366/CMPUT366ASS4/mc_agent.py",
+		"/Users/haotianzhu/Documents/CMPUT366/CMPUT366ASS4/gambler_env.py",
+		"/Users/haotianzhu/Documents/CMPUT366/CMPUT366ASS4/environment.py",
+		"/Users/haotianzhu/Documents/CMPUT366/CMPUT366ASS1/w1_exp.py",
+		"/Users/haotianzhu/Documents/CMPUT366/CMPUT366ASS1/rl_glue.py",
+		"/Users/haotianzhu/Documents/CMPUT366/CMPUT366ASS4/utils.py",
+		"/Users/haotianzhu/Documents/CMPUT391QUIZ/test.sql",
+		"/Users/haotianzhu/Documents/NoName.wiki/Glossary.creole",
+		"/Users/haotianzhu/Documents/apache-jena-3.4.0/jena-log4j.properties",
+		"/Users/haotianzhu/Desktop/test.py",
+		"/Users/haotianzhu/Documents/sparql/bat/sparql.bat",
+		"/Users/haotianzhu/Downloads/ex001.rq",
+		"/Users/haotianzhu/Desktop/test.ttl",
+		"/Users/haotianzhu/Documents/NoName/LICENSE",
+		"/Users/haotianzhu/Downloads/mc_agent.py",
+		"/Users/haotianzhu/Downloads/_mc_agent.py",
+		"/Users/haotianzhu/Downloads/apache-jena-3.4.0/src-examples/data/test1.owl",
+		"/Users/haotianzhu/Downloads/apache-jena-3.4.0/src-examples/data/eswc-2006-09-21.rdf",
+		"/Users/haotianzhu/Downloads/apache-jena-3.4.0/bat/trig.bat",
+		"/Users/haotianzhu/Downloads/apache-jena-3.4.0/jena-log4j.properties",
+		"/Users/haotianzhu/Documents/CMPUT366/CMPUT366ASS3/Program2/test.py",
+		"/Users/haotianzhu/Documents/CMPUT366/CMPUT366ASS3/Program2/mc_agent.py",
+		"/Users/haotianzhu/Documents/d02_team7/UNIT1/constraints.sql",
+		"/Users/haotianzhu/Documents/CMPUT366/CMPUT366ASS3/Program2/gambler_env.py",
+		"/Users/haotianzhu/Documents/CMPUT366/CMPUT366ASS3/Program2/gambler_exp.py",
+		"/Users/haotianzhu/Documents/CMPUT366/CMPUT366ASS3/Program1/valueIteration.py",
+		"/Users/haotianzhu/Documents/CMPUT366/CMPUT366ASS3/Program1/plot.py",
+		"/Users/haotianzhu/Documents/PythonCrawler/firstProj/firstMain.py",
+		"/Users/haotianzhu/Documents/CMPUT366/CMPUT366ASS3/Program2/plot.py"
+	],
+	"find":
+	{
+		"height": 39.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "agent.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": false,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
