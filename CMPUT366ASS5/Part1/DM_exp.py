@@ -28,6 +28,7 @@ start_time = time.time()
 if __name__ == "__main__":
 	alist = [0,5,50]
 	data = np.zeros((3,50))
+	np.random.seed(100)
 	for i in range(3):
 		changeN(alist[i])
 		print("... n: %d" %(alist[i]))

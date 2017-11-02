@@ -28,6 +28,7 @@ start_time = time.time()
 if __name__ == "__main__":
 	alist = [0.03125,0.0625,0.125,0.25,0.5,1.0]
 	data = np.zeros((6))
+	np.random.seed(100)
 	for i in range(6):
 		changeAlpha(alist[i])
 		print("... alpha: %f" %(alist[i]))
